@@ -1,0 +1,70 @@
+SQL = Structured Query language
+
+Omogoča CRUD operacije:
+- Create (INSERT)
+- Read (SELECT)
+- Update (UPDATE)
+- Delete (DROP, DELETE)
+
+SQLite3
+- komande ki se začnejo s '.' so specifične za SQLite
+- komande, ki bojo napisane z velikimi črkami so identične v vseh SQL jezikih
+- Odpremo bazo `sqlite3 shows.db`
+- Zapremo bazo `.exit`
+- Uvazanje iz .csv fajlov
+    - `.mode csv`
+    - `.import file.csv`
+- Lepsi format printanja rezultatov `.mode columns`
+- Shema baze `.schema`
+
+- Relacije
+    - one-to-one
+    - one-to-many
+    - many-to-many (potrebujemo dodatno tabelo)
+
+Komande
+- vsaka se zaključi s ';'
+- Operacije
+    - AVG, COUNT, DISTINCT, LOWER, MAX, MIN, UPPER...
+- Pogoji
+    - WHERE, LIKE, ORDER BY, LIMIT, GROUP BY
+
+- Branje iz tabele
+    - SELECT <column, ...> FROM table
+    - SELECT * (izbere vse stolpce)
+    - SELECT id, title (izbere 2 stolpca)
+
+- Vstavljanje v tabelo
+    - INSERT INTO table (column, ...) VALUES (value, ...)
+    - INSERT INTO people (name, birth) VALUES ('TestkoTest Testkovič', 1991)
+
+- Brisanje iz tabele
+    - DELETE FROM table (!!!) Izbriše celo tabelo, priporočljivo da vedno uporabimo z WHERE
+    - DELETE FROM people WHERE name = 'TestkoTest Testkovič';
+- Zdruzevanje rezultatov iz vec tabel
+    - JOIN table on <polje 1.tabela> = <polje 2.tabela>
+    - SELECT * FROM shows JOIN genres on shows.id = genres.show_id LIMIT 10;
+
+- Indekse (B-drevo) lahko zgradimo na poljubnem stolpcu (primarni ključ avtomatsko).
+    Pospeši iskanje, počasnejše vstavljanje
+    - CREATE INDEX index_name on table(column)
+    - CREATE INDEX title_index on shows(title)
+
+- Kombiniranje queryev
+SELECT name FROM people
+WHERE id IN (
+    SELECT person_id FROM stars
+    WHERE show_id = (
+      SELECT id FROM shows
+      WHERE title = 'The Office' AND year = 2005
+    )
+);
+
+SELECT title from shows
+WHERE id IN (
+    SELECT show_id FROM stars
+    WHERE person_id = (
+        SELECT id FROM people
+        WHERE name = 'Steve Carell'
+    )
+);
