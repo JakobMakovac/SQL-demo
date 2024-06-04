@@ -2,7 +2,10 @@ SQL = Structured Query language
 
 Omogoča CRUD operacije:
 - Create (INSERT)
-- Read (SELECT)
+- Read (SELECT)Branje iz tabele
+    - SELECT <column, ...> FROM table
+    - SELECT * (izbere vse stolpce)
+    - SELECT id, title (izbere 2 stolpca)
 - Update (UPDATE)
 - Delete (DROP, DELETE)
 
@@ -29,10 +32,7 @@ Komande
 - Pogoji
     - WHERE, LIKE, ORDER BY, LIMIT, GROUP BY
 
-- Branje iz tabele
-    - SELECT <column, ...> FROM table
-    - SELECT * (izbere vse stolpce)
-    - SELECT id, title (izbere 2 stolpca)
+- 
 
 - Vstavljanje v tabelo
     - INSERT INTO table (column, ...) VALUES (value, ...)

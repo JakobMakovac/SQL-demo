@@ -1,6 +1,6 @@
 from db import DB
 
-db_path = 'shows.db'
+db_path = 'login.db'
 db = DB(db_path)
 
 class App:
@@ -15,11 +15,28 @@ class App:
         return self.logged_in
     
     def register(self):
-        print('Register not implemented yet.')
+        username = input("Select your username:")
+        password = input("Select your password:")
+        db.add(username, password)
+        self.main_menu()
         return
     
     def login(self):
-        print('Login not implemented yet.')
+        username = input("Username:")
+        password = input("Password:")
+        match = db.compare(username, password)
+        if match == True:
+            print("Succes!")
+            self.logged_in = True
+            self.active_user = username
+            self.main_menu()
+        else:
+            try_again = input("Login unsuccesful. Want to try again?")
+            if try_again == "yes":
+                self.login()
+            else:
+                self.main_menu()
+        
         return
     
     def rename(self):
@@ -27,7 +44,9 @@ class App:
         return
     
     def logout(self):
-        print('Logout not implemented yet.')
+        self.active_user = None
+        self.logged_in = False
+        self.main_menu()
         return
 
     def main_menu(self):
